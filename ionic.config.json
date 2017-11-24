@@ -1,0 +1,8 @@
+{
+  "name": "qna-app",
+  "app_id": "2060920f",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
