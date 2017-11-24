@@ -6,6 +6,7 @@ import { MyApp } from './app.component';
 import { FeedPage } from './../pages/feed/feed';
 import { ActivePage } from './../pages/active/active';
 import { CompletedPage } from './../pages/completed/completed';
+import { LoginPage } from './../pages/login/login';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -17,6 +18,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ActivePage,
     CompletedPage,
     FeedPage,
+    LoginPage,
     TabsPage
   ],
   imports: [
@@ -29,6 +31,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ActivePage,
     CompletedPage,
     FeedPage,
+    LoginPage,
     TabsPage
   ],
   providers: [
