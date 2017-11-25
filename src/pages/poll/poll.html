@@ -1,0 +1,78 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>New Poll</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  
+  <ion-list>
+      <!--<ion-list-header>
+        Configuration
+      </ion-list-header>-->
+      <ion-item>
+          <ion-label>Immutable</ion-label>
+          <ion-toggle [(ngModel)]="immutable"></ion-toggle>
+      </ion-item>
+      <ion-item>
+          <ion-label>Open</ion-label>
+          <ion-toggle [(ngModel)]="open"></ion-toggle>
+      </ion-item>
+      <ion-item>
+          <ion-label>Reply once</ion-label>
+          <ion-toggle [(ngModel)]="replyOnce"></ion-toggle>
+      </ion-item>
+      <ion-item>
+          <ion-label>Privacy</ion-label>
+          <ion-select [(ngModel)]="privacy">
+            <ion-option value="global">Global</ion-option>
+            <ion-option value="public">Public</ion-option>
+            <ion-option value="private">Private</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label>Transparency</ion-label>
+            <ion-select [(ngModel)]="transparency">
+              <ion-option value="transparent">Transparent</ion-option>
+              <ion-option value="translucent">Translucent</ion-option>
+              <ion-option value="opaque">Opaque</ion-option>
+            </ion-select>
+          </ion-item>
+  </ion-list>
+  <ion-list>
+      <ion-list-header>
+        Question
+      </ion-list-header>
+      <ion-item>
+          <ion-textarea [(ngModel)]="question"></ion-textarea>
+       </ion-item>
+  </ion-list>
+  <ion-list>
+      <ion-list-header>
+        Answers
+      </ion-list-header>
+      
+      <ion-item>
+        <ion-label>Item</ion-label>
+        <ion-input [(ngModel)]="answer" (keyup.enter)="addAnswer()"></ion-input>
+        <button item-right ion-button color="secondary" (click)="addAnswer()">
+            <ion-icon name="add"></ion-icon>
+        </button>
+      </ion-item>
+      <ion-item *ngFor="let a of answers">{{a}}
+          <button item-right ion-button color="danger" (click)="removeAnswer(a)">
+              <ion-icon name="trash"></ion-icon>
+          </button>
+      </ion-item>
+     
+  </ion-list>
+
+    <ion-buttons end>
+        <button ion-button round (click)="save()">Save</button>
+        <button ion-button round (click)="close()">Cancel</button>
+    </ion-buttons>
+</ion-content>
