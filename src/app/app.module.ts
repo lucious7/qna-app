@@ -18,10 +18,12 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { PollPage } from '../pages/poll/poll';
 
 @NgModule({
   declarations: [
     MyApp,
+    PollPage,
     ActivePage,
     CompletedPage,
     FeedPage,
@@ -38,6 +40,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    PollPage,
     ActivePage,
     CompletedPage,
     FeedPage,
