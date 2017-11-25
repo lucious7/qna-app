@@ -12,10 +12,6 @@
   
   <ion-list>
       <ion-item>
-          <ion-label>Immutable</ion-label>
-          <ion-toggle [(ngModel)]="immutable"></ion-toggle>
-      </ion-item>
-      <ion-item>
           <ion-label>Open</ion-label>
           <ion-toggle [(ngModel)]="open"></ion-toggle>
       </ion-item>
@@ -37,6 +33,14 @@
               <ion-option value="transparent">Transparent</ion-option>
               <ion-option value="translucent">Translucent</ion-option>
               <ion-option value="opaque">Opaque</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label>Editability</ion-label>
+            <ion-select [(ngModel)]="editability">
+                <ion-option value="editable">Editable</ion-option>
+                <ion-option value="promptable">Promptable</ion-option>
+                <ion-option value="immutable">Immutable</ion-option>
             </ion-select>
           </ion-item>
   </ion-list>
@@ -68,8 +72,33 @@
      
   </ion-list>
 
+  <ion-list>
+        <ion-list-header>
+          Respondents
+        </ion-list-header>
+        
+        <ion-item *ngFor="let f of friends">
+                <ion-avatar item-start>
+                    <ion-icon name="contact"></ion-icon>
+                </ion-avatar>
+                <h2>{{f.name}}</h2>
+                <button *ngIf="respondents.indexOf(f) == -1"item-right ion-button color="primary" (click)="addRespondent(f)">
+                        <ion-icon name="checkmark-circle"></ion-icon>
+                </button>
+                <button *ngIf="respondents.indexOf(f) !== -1" item-right ion-button color="secondary" (click)="removeRespondent(f)">
+                        <ion-icon name="checkmark-circle"></ion-icon>
+                </button>
+        </ion-item>
+        <ion-item *ngFor="let a of answers">{{a}}
+            <button item-right ion-button color="danger" (click)="removeAnswer(a)">
+                <ion-icon name="trash"></ion-icon>
+            </button>
+        </ion-item>
+       
+    </ion-list>
+
     <ion-buttons end>
-        <button ion-button round (click)="save()">Save</button>
+        <button ion-button round (click)="save()" [disabled]="!question || answers.length == 0">Save</button>
         <button ion-button round (click)="close()">Cancel</button>
     </ion-buttons>
 </ion-content>
