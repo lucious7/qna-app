@@ -1,7 +1,14 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+
 import { MyApp } from './app.component';
+
+import { AuthService, firebaseConfig } from './auth.service';
+import { ToastService } from './toast.service';
 
 import { FeedPage } from './../pages/feed/feed';
 import { ActivePage } from './../pages/active/active';
@@ -19,11 +26,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     CompletedPage,
     FeedPage,
     LoginPage,
-    TabsPage
+    TabsPage,
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -32,12 +42,15 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     CompletedPage,
     FeedPage,
     LoginPage,
-    TabsPage
+    TabsPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    AngularFireDatabase,
+    AuthService,
+    ToastService,
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
   ]
 })
-export class AppModule {}
+export class AppModule { }

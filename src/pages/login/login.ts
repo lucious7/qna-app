@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { AuthService } from './../../app/auth.service';
+import { ToastService } from './../../app/toast.service';
+
 /**
  * Generated class for the LoginPage page.
  *
@@ -15,11 +18,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private authService: AuthService, public toastService: ToastService) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+  }
+
+  facebookLogin() {
+    this.authService.facebookLogin();
+  }
+
+  noSuchMethod() {
+    this.toastService.alert('Not implemented yet!');
   }
 
 }
