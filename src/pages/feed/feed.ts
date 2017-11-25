@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { PollPage } from '../poll/poll';
-import { ModalController } from 'ionic-angular/components/modal/modal-controller';
+import { IonicPage } from 'ionic-angular';
+
+import { Navbar } from '../../app/navbar.component';
 
 /**
  * Generated class for the FeedPage page.
@@ -17,20 +17,13 @@ import { ModalController } from 'ionic-angular/components/modal/modal-controller
 })
 export class FeedPage {
 
-  constructor(public navCtrl: NavController, 
-              public navParams: NavParams,
-              public modalCtrl: ModalController) {
+  constructor() {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FeedPage');
   }
   
-  openPollForm(event) {
-    //this.navCtrl.push(PollPage);
-    let pollform = this.modalCtrl.create(PollPage);
-    pollform.present(); 
 
-  }
 
 }

@@ -10,6 +10,7 @@ import { MyApp } from './app.component';
 import { AuthService, firebaseConfig } from './auth.service';
 import { ToastService } from './toast.service';
 
+import { Navbar } from './navbar.component';
 import { PollPage } from '../pages/poll/poll';
 import { FeedPage } from './../pages/feed/feed';
 import { ActivePage } from './../pages/active/active';
@@ -23,6 +24,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 @NgModule({
   declarations: [
     MyApp,
+    Navbar,
     PollPage,
     ActivePage,
     CompletedPage,
@@ -40,6 +42,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    Navbar,
     PollPage,
     ActivePage,
     CompletedPage,
