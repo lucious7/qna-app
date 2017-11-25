@@ -26,7 +26,8 @@ export class LoginPage {
   }
 
   facebookLogin() {
-    this.authService.facebookLogin();
+    this.authService.facebookLogin()
+    .catch((error) => {console.log(error); });
   }
 
   noSuchMethod() {
