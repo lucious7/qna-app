@@ -32,6 +32,10 @@ export class AuthService {
     return this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
   }
 
+  googleLogin(): Promise<any> {
+    return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  }
+
   logout(): Promise<any> {
     return this.afAuth.auth.signOut();
   }

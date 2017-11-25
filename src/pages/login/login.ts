@@ -27,7 +27,12 @@ export class LoginPage {
 
   facebookLogin() {
     this.authService.facebookLogin()
-    .catch((error) => {console.log(error); });
+    .catch((error) => console.log(error) );
+  }
+
+  googleLogin(){
+    this.authService.googleLogin()
+    .catch((error) => console.log(error));
   }
 
   noSuchMethod() {
