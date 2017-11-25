@@ -10,6 +10,7 @@ import { MyApp } from './app.component';
 import { AuthService, firebaseConfig } from './auth.service';
 import { ToastService } from './toast.service';
 
+import { PollPage } from '../pages/poll/poll';
 import { FeedPage } from './../pages/feed/feed';
 import { ActivePage } from './../pages/active/active';
 import { CompletedPage } from './../pages/completed/completed';
@@ -18,7 +19,6 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { PollPage } from '../pages/poll/poll';
 
 @NgModule({
   declarations: [

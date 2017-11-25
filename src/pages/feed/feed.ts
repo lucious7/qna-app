@@ -29,7 +29,7 @@ export class FeedPage {
   openPollForm(event) {
     //this.navCtrl.push(PollPage);
     let pollform = this.modalCtrl.create(PollPage);
-    pollform.present();
+    pollform.present(); 
 
   }
 
