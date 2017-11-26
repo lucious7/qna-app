@@ -19,7 +19,11 @@ import { AuthService } from '../../app/auth.service';
 export class CompletedPage {
   items: Observable<any[]>;
   constructor(private afDB: AngularFireDatabase, private authService: AuthService) { 
-    this.items = this.afDB.list('respondents/' + this.authService.getUser().uid).valueChanges();
+    this.items = this.afDB.list('respondents/' + this.authService.getUser().uid)
+    .snapshotChanges()
+    .map(pollActions => {
+      return pollActions.map(pollAction => ({ key: pollAction.key, ...pollAction.payload.val() }));
+    });
     
   }
   ionViewDidLoad() {

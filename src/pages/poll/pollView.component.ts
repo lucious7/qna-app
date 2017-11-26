@@ -27,7 +27,8 @@ export class PollView {
   votedKey: Object = null;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private pollService: PollService) {
-    this.pollKey = `-Kzts5gLOm6UZ6HyD4Vi`;
+    //this.pollKey = `-Kzts5gLOm6UZ6HyD4Vi`;
+    this.pollKey = navParams.get('pollKey');
     this.poll = pollService.getPoll$(this.pollKey).valueChanges();
 
     pollService.getPoll$(this.pollKey).valueChanges().subscribe(selectedPoll => {
