@@ -12,5 +12,5 @@
 
 
 <ion-content padding>
-Completed
+    <app-pollcard *ngFor="let item of items | async" [poll]="item"></app-pollcard>
 </ion-content>

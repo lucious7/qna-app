@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { AuthService } from '../../app/auth.service';
 
 /**
  * Generated class for the CompletedPage page.
@@ -14,10 +17,11 @@ import { IonicPage } from 'ionic-angular';
   templateUrl: 'completed.html',
 })
 export class CompletedPage {
-
-  constructor() {
+  items: Observable<any[]>;
+  constructor(private afDB: AngularFireDatabase, private authService: AuthService) { 
+    this.items = this.afDB.list('respondents/' + this.authService.getUser().uid).valueChanges();
+    
   }
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad CompletedPage');
   }

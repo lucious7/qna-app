@@ -20,7 +20,7 @@ export class ActivePage {
   items: Observable<any[]>;
   constructor(private afDB: AngularFireDatabase, private authService: AuthService) { 
     this.items = this.afDB.list('respondents/' + this.authService.getUser().uid).valueChanges();
-    console.log('itens ativos', this.items)
+    
   }
 
   ionViewDidLoad() {
