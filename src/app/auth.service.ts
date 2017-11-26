@@ -43,7 +43,7 @@ export class AuthService {
 
   getFriends(): AngularFireList<any> {
     console.warn('Listing ALL users!! Be careful!');
-    return this.afDB.list('users', ref => ref.orderByChild(`name`));
+    return this.afDB.list('friends/'+this.user.uid, ref => ref.orderByChild(`name`));
   }
 
   private checkUserAuth(): void {
@@ -83,9 +83,9 @@ export class AuthService {
       let friendshipRef = this.afDB.object('friends/' + this.user.uid);
       
       let friends = {
-        Cq1z3ZIFHdb5A50NpolurvzNey72 : "Thiago Almeida", 
-        Unx1C2hOGWh7Xir0z3vfiMkGLkF3 : "Lucivaldo Costa",
-        Ik9ah46crKhyxXiEjEGrwTbwrJf2 : "Renato Silva"
+        Cq1z3ZIFHdb5A50NpolurvzNey72 : {name:"Thiago Almeida"}, 
+        Unx1C2hOGWh7Xir0z3vfiMkGLkF3 : {name:"Lucivaldo Costa"},
+        Ik9ah46crKhyxXiEjEGrwTbwrJf2 : {name:"Renato Silva"}
       }
       friendshipRef.set(friends);
   }
