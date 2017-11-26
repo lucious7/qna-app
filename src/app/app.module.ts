@@ -11,6 +11,8 @@ import { AuthService, firebaseConfig } from './auth.service';
 import { ToastService } from './toast.service';
 
 import { Navbar } from './navbar.component';
+
+import { PollCard } from '../pages/poll/pollCard.component';
 import { PollPage } from '../pages/poll/poll';
 import { FeedPage } from './../pages/feed/feed';
 import { ActivePage } from './../pages/active/active';
@@ -20,11 +22,15 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { PollView, KeysPipe } from '../pages/poll/pollView.component';
 
 @NgModule({
   declarations: [
     MyApp,
     Navbar,
+    KeysPipe,
+    PollCard,
+    PollView,
     PollPage,
     ActivePage,
     CompletedPage,
@@ -43,6 +49,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   entryComponents: [
     MyApp,
     Navbar,
+    PollCard,
+    PollView,
     PollPage,
     ActivePage,
     CompletedPage,

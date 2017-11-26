@@ -21,7 +21,7 @@ export class ActivePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ActivePage');
+    console.log('ionViewDidLoad ActivePage'); 
   }
 
 }
