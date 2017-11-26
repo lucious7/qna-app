@@ -8,6 +8,10 @@ export class PollService {
 
   constructor(private afDB: AngularFireDatabase, private authService: AuthService) { }
 
+  getPoll$(key: string) {
+    return this.afDB.object(`polls/${key}`);
+  }
+
   addPoll(poll: any, respondents: any[]) {
     const user = this.authService.getUser();
 
@@ -23,6 +27,9 @@ export class PollService {
     respondents.forEach(respondent => {
       // respondent list inside poll
       poll.respondents[respondent.key] = { name: respondent.name };
+
+      // initiator is also a respondent
+      poll.respondents[poll.initiatorId] = { name: poll.initiatorName };
 
       // poll list inside respondent
       newPollData[`respondents/${respondent.key}/${newPollKey}`] = false;
