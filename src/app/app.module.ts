@@ -22,7 +22,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { PollView, KeysPipe } from '../pages/poll/pollView.component';
+import { PollView } from '../pages/poll/pollView.component';
+import { KeysPipe } from '../pages/poll/keys.pipe';
 
 @NgModule({
   declarations: [
