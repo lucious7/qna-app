@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
+
+import 'rxjs/add/operator/take';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyB6LM0D2wmmrVF70YWWiR_ffrKsao9H31M',
@@ -17,7 +20,7 @@ export class AuthService {
 
   private user: firebase.User;
 
-  constructor(private afAuth: AngularFireAuth) {
+  constructor(private afAuth: AngularFireAuth, private afDB: AngularFireDatabase) {
     afAuth.authState.subscribe((user: firebase.User) => {
       console.info(`user = `, user);
       this.user = user;
@@ -28,12 +31,44 @@ export class AuthService {
     return this.afAuth.authState;
   }
 
-  facebookLogin(): Promise<any> {
-    return this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
+  getUserInfo$(uid?: string): AngularFireObject<any> {
+    uid = uid || this.getUser().uid;
+    return this.afDB.object(`users/${uid}`);
+  }
+
+  getUser(): firebase.User {
+    this.checkUserAuth();
+    return this.user;
+  }
+
+  private checkUserAuth(): void {
+    if (!this.user)
+      throw new Error(`é necessário estar logado para realizar esta operação`); // TODO better error handling
+  }
+
+  facebookLogin(): Promise<void> {
+    return this.login(new firebase.auth.FacebookAuthProvider());
   }
 
   googleLogin(): Promise<any> {
-    return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    return this.login(new firebase.auth.GoogleAuthProvider());
+  }
+
+  private login(provider: firebase.auth.AuthProvider) {
+    return this.afAuth.auth.signInWithPopup(provider)
+      .then(signInResp => {
+        return this.getUserInfo$(signInResp.user.uid).snapshotChanges().take(1).toPromise();
+      })
+      .then(userInfo => {
+        if (userInfo.payload.exists())
+          return;
+
+        return this.getUserInfo$(userInfo.payload.key).set({
+          email: this.user.email,
+          name: this.user.displayName,
+          createdOn: firebase.database.ServerValue.TIMESTAMP,
+        });
+      });
   }
 
   logout(): Promise<any> {
