@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Observable } from 'rxjs';
 
+import { AuthService } from '../../app/auth.service';
 import { PollService } from './poll.service';
 
 @IonicPage()
@@ -11,6 +13,7 @@ import { PollService } from './poll.service';
 export class PollPage {
 
   answer: String = null;
+  friends: Observable<any[]>;
 
   question: String = '';
   answers: String[] = [];
@@ -21,16 +24,14 @@ export class PollPage {
   replyOnce: boolean = false;
   respondents: Object[] = [];
 
-  friends: Object[] = [
-    { id: 1, name: 'Friend 1' },
-    { id: 2, name: 'Friend 2' },
-    { id: 3, name: 'Friend 3' },
-    { id: 4, name: 'Friend 4' },
-    { id: 5, name: 'Friend 5' },
-    { id: 6, name: 'Friend 6' },
-  ];
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, private pollService: PollService) { }
+  constructor(public navCtrl: NavController, public navParams: NavParams, private pollService: PollService, authService: AuthService) {
+    this.friends = authService.getFriends().snapshotChanges()
+      .map(friendsActions => friendsActions.map(action => ({
+        key: action.key,
+        name: action.payload.val().name,
+      })))
+      .take(1);
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PollPage');
@@ -70,6 +71,7 @@ export class PollPage {
       editability: this.editability,
       open: this.open,
       replyOnce: this.replyOnce,
+      respondents: this.respondents,
     })
       .then(() => {
         this.close();

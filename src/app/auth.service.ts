@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireObject, AngularFireList } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 
@@ -41,6 +41,11 @@ export class AuthService {
     return this.user;
   }
 
+  getFriends(): AngularFireList<any> {
+    console.warn('Listing ALL users!! Be careful!');
+    return this.afDB.list('users', ref => ref.orderByChild(`name`));
+  }
+
   private checkUserAuth(): void {
     if (!this.user)
       throw new Error(`é necessário estar logado para realizar esta operação`); // TODO better error handling
@@ -50,7 +55,7 @@ export class AuthService {
     return this.login(new firebase.auth.FacebookAuthProvider());
   }
 
-  googleLogin(): Promise<any> {
+  googleLogin(): Promise<void> {
     return this.login(new firebase.auth.GoogleAuthProvider());
   }
 
