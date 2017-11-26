@@ -1,0 +1,26 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>Poll Viewer</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-list>
+        <ion-item>
+            <p>{{question.description}}</p>
+        </ion-item>
+        <ion-item *ngFor="let a of question.answers | KeysPipe">{{question.answers[a]}}
+                
+            </ion-item>
+    </ion-list>
+    
+
+    <ion-buttons end>
+        <button ion-button round (click)="vote()" >Vote</button>
+        <button ion-button round (click)="dismiss()">Cancel</button>
+    </ion-buttons>
+</ion-content>
