@@ -24,6 +24,7 @@
 
     <ion-buttons end>
         <button ion-button round (click)="vote()" [disabled]="!votedKey" >Vote</button>
+        <button ion-button round (click)="closePoll()" >Close</button>
         <button ion-button round (click)="dismiss()">Cancel</button>
     </ion-buttons>
 </ion-content>

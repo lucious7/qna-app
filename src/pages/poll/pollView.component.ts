@@ -32,6 +32,10 @@ export class PollView {
     
   }
 
+  closePoll(event){
+    console.log('closing poll');
+  }
+
   dismiss(event){
     this.navCtrl.pop();
   }
