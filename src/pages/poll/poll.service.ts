@@ -17,6 +17,7 @@ export class PollService {
 
     poll.initiatorId = user.uid;
     poll.initiatorName = user.displayName;
+    poll.status = 'open';
     poll.respondents = {}; // initialize respondents
 
     const newPollRef = this.afDB.database.ref(`polls`).push();
@@ -34,7 +35,8 @@ export class PollService {
       // poll list inside respondent
       newPollData[`respondents/${respondent.key}/${newPollKey}`] = {
         question: poll.question,
-        initiatorName: poll.initiatorName
+        initiatorName: poll.initiatorName,
+        status : 'open'
       };
     });
 
@@ -52,6 +54,29 @@ export class PollService {
     newVoteData[`polls/${pollKey}/respondents/${user.uid}/vote`] = answerKey;
 
     return this.afDB.database.ref().update(newVoteData);
+  }
+
+  closePoll(pollKey: string){
+    var closedStatus = { status: 'closed' };
+
+    const itemRef = this.afDB.object('polls/' + pollKey);
+
+    //updates poll's status
+    itemRef.update(closedStatus)
+    .then(p => {
+        let respondents = this.afDB.list('polls/' + pollKey + '/respondents')
+        .snapshotChanges()
+        .map(pollActions => {
+          return pollActions.map(pollAction => ({ key: pollAction.key, ...pollAction.payload.val() }));
+        });
+
+        respondents.forEach(respondent => {
+              const respRef = this.afDB.object('respondents/' + respondent.key);
+              respRef.update(closedStatus)
+        });
+
+
+    })
   }
 
 }
