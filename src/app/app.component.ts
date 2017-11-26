@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Platform, NavController } from 'ionic-angular';
+import { Platform, NavController, ModalController } from 'ionic-angular';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -8,6 +8,7 @@ import * as firebase from 'firebase/app';
 
 import { LoginPage } from './../pages/login/login';
 import { TabsPage } from './../pages/tabs/tabs';
+import { PollPage } from '../pages/poll/poll';
 
 import { AuthService } from './auth.service';
 
@@ -23,8 +24,8 @@ export class MyApp implements OnInit {
 
   rootPage: any = LoginPage;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private authService: AuthService,
-              private menuCtrl: MenuController) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, 
+    private authService: AuthService, private menuCtrl: MenuController, private modalCtrl: ModalController) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -68,6 +69,11 @@ export class MyApp implements OnInit {
     this.authService.logout();
   }
 
+  openPollForm(event) {
+    let pollform = this.modalCtrl.create(PollPage);
+    pollform.present(); 
+    this.closeMenu();
+  }
 
   private enableMenu(enable: boolean) {
     this.menuCtrl.swipeEnable(enable);
