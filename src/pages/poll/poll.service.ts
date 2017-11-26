@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
-import * as firebase from 'firebase/app';
 
 import { AuthService } from '../../app/auth.service';
 
@@ -9,13 +8,30 @@ export class PollService {
 
   constructor(private afDB: AngularFireDatabase, private authService: AuthService) { }
 
-  addPoll(poll: any): firebase.database.ThenableReference {
+  addPoll(poll: any, respondents: any[]) {
     const user = this.authService.getUser();
 
     poll.initiatorId = user.uid;
     poll.initiatorName = user.displayName;
+    poll.respondents = {}; // initialize respondents
 
-    return this.afDB.list('polls').push(poll);
+    const newPollRef = this.afDB.database.ref(`polls`).push();
+    const newPollKey = newPollRef.key;
+
+    let newPollData = {};
+
+    respondents.forEach(respondent => {
+      // respondent list inside poll
+      poll.respondents[respondent.key] = { name: respondent.name };
+
+      // poll list inside respondent
+      newPollData[`respondents/${respondent.key}/${newPollKey}`] = false;
+    });
+
+    // main poll obj
+    newPollData[`polls/${newPollKey}`] = poll;
+
+    return this.afDB.database.ref().update(newPollData);
   }
 
 }
