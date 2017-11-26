@@ -7,17 +7,19 @@ import { PollView } from './pollView.component';
   templateUrl: 'pollCard.html',
 })
 export class PollCard {
-  @Input() poll:String = null;
+  @Input() poll:Object = null;
+  @Input() pollkey:String = null;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public modalCtrl: ModalController) {
-      console.log('card poll', this.poll);
   }
 
   openPollView(event) {
     console.log('Open poll view');
-    let modal = this.modalCtrl.create(PollView);
+    console.log('card poll', this.poll);
+    console.log('card poll key', this.pollkey);
+    let modal = this.modalCtrl.create(PollView,{pollKey: this.pollkey });
     modal.present();
   }
 
