@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { PollView } from './pollView.component';
 
@@ -7,10 +7,12 @@ import { PollView } from './pollView.component';
   templateUrl: 'pollCard.html',
 })
 export class PollCard {
+  @Input() poll:String = null;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public modalCtrl: ModalController) {
+      console.log('card poll', this.poll);
   }
 
   openPollView(event) {

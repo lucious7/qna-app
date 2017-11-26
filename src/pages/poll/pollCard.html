@@ -6,12 +6,12 @@
                 <img src="assets/imgs/logo.png">
             </ion-avatar>
             <h2>
-                <strong>Renato2</strong> has initiated a poll</h2>
-            <p>Close in 3 days</p>
+                <strong>{{poll.initiatorName}}</strong> </h2>
+            <p>has initiated a poll</p>
         </ion-item>
-        <h1>What's the best beer in town?</h1>
+        <h1>{{poll.question}}</h1>
     </ion-card-content>
-    
+<!--    
     <ion-row align-items-center>
         <ion-col>
             <button ion-button icon-left clear small>
@@ -31,5 +31,5 @@
             </ion-note>
         </ion-col>
     </ion-row>
-        
+-->
 </ion-card>

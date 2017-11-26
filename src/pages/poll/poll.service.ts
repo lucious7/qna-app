@@ -32,7 +32,10 @@ export class PollService {
       poll.respondents[poll.initiatorId] = { name: poll.initiatorName };
 
       // poll list inside respondent
-      newPollData[`respondents/${respondent.key}/${newPollKey}`] = false;
+      newPollData[`respondents/${respondent.key}/${newPollKey}`] = {
+        question: poll.question,
+        initiatorName: poll.initiatorName
+      };
     });
 
     // main poll obj

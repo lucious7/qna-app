@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
+import { AuthService } from '../../app/auth.service';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { Observable } from 'rxjs/Observable';
 
 /**
  * Generated class for the ActivePage page.
@@ -14,12 +17,14 @@ import { IonicPage } from 'ionic-angular';
   templateUrl: 'active.html',
 })
 export class ActivePage {
-
-  constructor() {
+  items: Observable<any[]>;
+  constructor(private afDB: AngularFireDatabase, private authService: AuthService) { 
+    this.items = this.afDB.list('respondents/' + this.authService.getUser().uid).valueChanges();
+    console.log('itens ativos', this.items)
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ActivePage');
+    
   }
 
 }

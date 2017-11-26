@@ -10,7 +10,11 @@
 
 </ion-header>
 
-
 <ion-content padding>
-Active
+    <!--<ul>
+        <li *ngFor="let item of items | async">
+           {{ item | json }}
+        </li>
+      </ul>-->
+  <app-pollcard *ngFor="let item of items | async" [poll]="item"></app-pollcard>
 </ion-content>

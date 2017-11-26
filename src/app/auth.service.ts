@@ -27,6 +27,10 @@ export class AuthService {
     });
   }
 
+  getDB(){
+    return this.afDB;
+  }
+
   getAuth$(): Observable<firebase.User> {
     return this.afAuth.authState;
   }
@@ -42,7 +46,6 @@ export class AuthService {
   }
 
   getFriends(): AngularFireList<any> {
-    console.warn('Listing ALL users!! Be careful!');
     return this.afDB.list('friends/'+this.user.uid, ref => ref.orderByChild(`name`));
   }
 
