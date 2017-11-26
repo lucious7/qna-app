@@ -9,8 +9,11 @@ import { MyApp } from './app.component';
 
 import { AuthService, firebaseConfig } from './auth.service';
 import { ToastService } from './toast.service';
+import { PollService } from "./../pages/poll/poll.service";
 
 import { Navbar } from './navbar.component';
+
+import { PollCard } from '../pages/poll/pollCard.component';
 import { PollPage } from '../pages/poll/poll';
 import { FeedPage } from './../pages/feed/feed';
 import { ActivePage } from './../pages/active/active';
@@ -20,11 +23,16 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { PollView } from '../pages/poll/pollView.component';
+import { KeysPipe } from '../pages/poll/keys.pipe';
 
 @NgModule({
   declarations: [
     MyApp,
     Navbar,
+    KeysPipe,
+    PollCard,
+    PollView,
     PollPage,
     ActivePage,
     CompletedPage,
@@ -43,6 +51,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   entryComponents: [
     MyApp,
     Navbar,
+    PollCard,
+    PollView,
     PollPage,
     ActivePage,
     CompletedPage,
@@ -56,6 +66,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AngularFireDatabase,
     AuthService,
     ToastService,
+    PollService,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
   ]
 })

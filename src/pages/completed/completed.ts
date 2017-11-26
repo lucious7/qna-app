@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 
-import { Navbar } from '../../app/navbar.component';
-
 /**
  * Generated class for the CompletedPage page.
  *

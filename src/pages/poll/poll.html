@@ -9,7 +9,7 @@
 
 
 <ion-content padding>
-  
+
   <ion-list>
       <ion-item>
           <ion-label>Open</ion-label>
@@ -56,7 +56,7 @@
       <ion-list-header>
         Answers
       </ion-list-header>
-      
+
       <ion-item>
         <ion-label>Item</ion-label>
         <ion-input [(ngModel)]="answer" (keyup.enter)="addAnswer()"></ion-input>
@@ -69,15 +69,15 @@
               <ion-icon name="trash"></ion-icon>
           </button>
       </ion-item>
-     
+
   </ion-list>
 
   <ion-list>
         <ion-list-header>
           Respondents
         </ion-list-header>
-        
-        <ion-item *ngFor="let f of friends">
+
+        <ion-item *ngFor="let f of friends | async">
                 <ion-avatar item-start>
                     <ion-icon name="contact"></ion-icon>
                 </ion-avatar>
