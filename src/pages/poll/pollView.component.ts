@@ -21,11 +21,13 @@ export class PollView {
     }
   }
 
+  votedKey:Object = null;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   vote(event){
-    console.log("Vote");
+    console.log("Vote", this.votedKey);
     this.dismiss(event);
     
   }

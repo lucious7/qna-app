@@ -13,9 +13,12 @@
         <ion-item>
             <p>{{question.description}}</p>
         </ion-item>
-        <ion-item *ngFor="let a of question.answers | KeysPipe">{{question.answers[a]}}
-                
-            </ion-item>
+    </ion-list>
+    <ion-list radio-group [(ngModel)]="votedKey">
+        <ion-item *ngFor="let a of question.answers | KeysPipe">
+                <ion-label>{{question.answers[a]}}</ion-label>
+                <ion-radio value="{{a}}"></ion-radio>    
+        </ion-item>
     </ion-list>
     
 
