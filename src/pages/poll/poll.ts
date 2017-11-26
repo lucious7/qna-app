@@ -71,8 +71,7 @@ export class PollPage {
       editability: this.editability,
       open: this.open,
       replyOnce: this.replyOnce,
-      respondents: this.respondents,
-    })
+    }, this.respondents)
       .then(() => {
         this.close();
       });
