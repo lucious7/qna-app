@@ -37,7 +37,11 @@ export class PollView {
 
   vote(event) {
     console.log('Vote', this.votedKey);
-    this.dismiss(event);
+
+    return this.pollService.vote(this.pollKey, 0)
+      .then(() => {
+        this.dismiss(event);
+      });
   }
 
   closePoll(event) {

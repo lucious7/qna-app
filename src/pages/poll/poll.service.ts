@@ -44,4 +44,14 @@ export class PollService {
     return this.afDB.database.ref().update(newPollData);
   }
 
+  vote(pollKey: string, answerKey: number) {
+    const user = this.authService.getUser();
+
+    let newVoteData = {};
+    newVoteData[`respondents/${user.uid}/${pollKey}/vote`] = answerKey;
+    newVoteData[`polls/${pollKey}/respondents/${user.uid}/vote`] = answerKey;
+
+    return this.afDB.database.ref().update(newVoteData);
+  }
+
 }
