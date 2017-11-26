@@ -67,13 +67,27 @@ export class AuthService {
       .then(userInfo => {
         if (userInfo.payload.exists())
           return;
-
+ 
         return this.getUserInfo$(userInfo.payload.key).set({
           email: this.user.email,
           name: this.user.displayName,
           createdOn: firebase.database.ServerValue.TIMESTAMP,
+        }).then(p => {
+          this.createDefaultFriends();
         });
       });
+  };
+
+  createDefaultFriends(){
+      console.log("create default friends")
+      let friendshipRef = this.afDB.object('friends/' + this.user.uid);
+      
+      let friends = {
+        Cq1z3ZIFHdb5A50NpolurvzNey72 : "Thiago Almeida", 
+        Unx1C2hOGWh7Xir0z3vfiMkGLkF3 : "Lucivaldo Costa",
+        Ik9ah46crKhyxXiEjEGrwTbwrJf2 : "Renato Silva"
+      }
+      friendshipRef.set(friends);
   }
 
   logout(): Promise<any> {
