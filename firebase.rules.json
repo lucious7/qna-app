@@ -1,0 +1,12 @@
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null",
+
+    "respondents": {
+      "$uid": {
+        ".indexOn": ["status"]
+      }
+    }
+  }
+}

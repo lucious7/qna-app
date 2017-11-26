@@ -21,13 +21,11 @@ export class ActivePage {
   items: Observable<any[]>;
 
   constructor(private afDB: AngularFireDatabase, private authService: AuthService) {
-    this.items = this.afDB.list('respondents/' + this.authService.getUser().uid)
+    this.items = this.afDB.list('respondents/' + this.authService.getUser().uid, ref => ref.orderByChild('status').equalTo('open'))
       .snapshotChanges()
       .map(pollActions => {
         return pollActions.map(pollAction => ({ key: pollAction.key, ...pollAction.payload.val() }));
       });
   }
-
-  ionViewDidLoad() { }
 
 }
