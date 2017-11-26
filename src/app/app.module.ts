@@ -9,6 +9,7 @@ import { MyApp } from './app.component';
 
 import { AuthService, firebaseConfig } from './auth.service';
 import { ToastService } from './toast.service';
+import { PollService } from "./../pages/poll/poll.service";
 
 import { Navbar } from './navbar.component';
 
@@ -65,6 +66,7 @@ import { KeysPipe } from '../pages/poll/keys.pipe';
     AngularFireDatabase,
     AuthService,
     ToastService,
+    PollService,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
   ]
 })

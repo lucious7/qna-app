@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { PollService } from './poll.service';
+
 @IonicPage()
 @Component({
   selector: 'poll-form',
@@ -8,9 +10,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class PollPage {
 
-  question: String = '';
-  answers: String[] = []
   answer: String = null;
+
+  question: String = '';
+  answers: String[] = [];
   privacy: String = 'public';
   transparency: String = 'opaque';
   editability: String = 'immutable';
@@ -25,10 +28,9 @@ export class PollPage {
     { id: 4, name: 'Friend 4' },
     { id: 5, name: 'Friend 5' },
     { id: 6, name: 'Friend 6' },
-  ]
+  ];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  constructor(public navCtrl: NavController, public navParams: NavParams, private pollService: PollService) { }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PollPage');
@@ -60,8 +62,18 @@ export class PollPage {
   }
 
   save() {
-    console.log('Save Poll into database:', this);
-    this.close();
+    return this.pollService.addPoll({
+      question: this.question,
+      answers: this.answers,
+      privacy: this.privacy,
+      transparency: this.transparency,
+      editability: this.editability,
+      open: this.open,
+      replyOnce: this.replyOnce,
+    })
+      .then(() => {
+        this.close();
+      });
   }
 
   close() {
