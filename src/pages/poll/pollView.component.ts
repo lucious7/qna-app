@@ -57,6 +57,8 @@ export class PollView {
 
   withdraw() {
     console.log('removing the user from the list of respondents');
+    this.pollService.withdraw(this.pollKey);
+    this.dismiss({});
   }
 
 }

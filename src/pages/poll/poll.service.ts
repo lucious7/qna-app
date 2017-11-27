@@ -56,6 +56,16 @@ export class PollService {
     return this.afDB.database.ref().update(newVoteData);
   }
 
+  withdraw(pollKey: string) {
+    const user = this.authService.getUser();
+
+    const respRef = this.afDB.object('respondents/'+user.uid+'/' + pollKey);
+    respRef.remove();
+
+    const pollRef = this.afDB.object('polls/' + pollKey + '/respondents/'+user.uid);
+    pollRef.remove();
+  }
+
   closePoll(pollKey: string) {
     let newClosePollData = {};
     newClosePollData[`polls/${pollKey}/status`] = 'closed';
