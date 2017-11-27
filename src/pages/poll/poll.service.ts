@@ -20,6 +20,9 @@ export class PollService {
     poll.status = 'open';
     poll.respondents = {}; // initialize respondents
 
+    // initiator is also a respondent
+    respondents.push({ key: poll.initiatorId, name: poll.initiatorName });
+
     const newPollRef = this.afDB.database.ref(`polls`).push();
     const newPollKey = newPollRef.key;
 
@@ -29,14 +32,11 @@ export class PollService {
       // respondent list inside poll
       poll.respondents[respondent.key] = { name: respondent.name };
 
-      // initiator is also a respondent
-      poll.respondents[poll.initiatorId] = { name: poll.initiatorName };
-
       // poll list inside respondent
       newPollData[`respondents/${respondent.key}/${newPollKey}`] = {
         question: poll.question,
         initiatorName: poll.initiatorName,
-        status : 'open'
+        status: 'open'
       };
     });
 
@@ -56,29 +56,29 @@ export class PollService {
     return this.afDB.database.ref().update(newVoteData);
   }
 
-  closePoll(pollKey: string){
+  closePoll(pollKey: string) {
     var closedStatus = { status: 'closed' };
 
     const itemRef = this.afDB.object('polls/' + pollKey);
 
     //updates poll's status
     itemRef.update(closedStatus)
-    .then(p => {
+      .then(p => {
         //get poll's respondents
         let respondents = this.afDB.list('polls/' + pollKey + '/respondents')
-        .snapshotChanges()
-        .map(pollActions => {
-          return pollActions.map(pollAction => ({ key: pollAction.key, ...pollAction.payload.val() }));
-        });
+          .snapshotChanges()
+          .map(pollActions => {
+            return pollActions.map(pollAction => ({ key: pollAction.key, ...pollAction.payload.val() }));
+          });
 
         //updates poll for each respondents list
         respondents.forEach(respondent => {
-              const respRef = this.afDB.object('respondents/' + respondent.key + '/' + pollKey);
-              respRef.update(closedStatus)
+          const respRef = this.afDB.object('respondents/' + respondent.key + '/' + pollKey);
+          respRef.update(closedStatus)
         });
 
 
-    })
+      })
   }
 
 }
