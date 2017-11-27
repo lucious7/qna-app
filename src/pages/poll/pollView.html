@@ -1,28 +1,34 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Poll Viewer</ion-title>
+    <ion-title>Poll View</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content padding>
 
-  <ion-list>
-    <ion-item>
-      <p>{{(poll | async)?.question}}</p>
-    </ion-item>
-  </ion-list>
   <ion-list radio-group [(ngModel)]="votedKey">
-    <ion-item *ngFor="let a of question.answers | KeysPipe">
-      <ion-label>{{question.answers[a]}}</ion-label>
-      <ion-radio value="{{a}}"></ion-radio>
+
+    <ion-list-header>
+      <h1>{{(poll | async)?.question}}</h1>
+      <p>{{(poll | async)?.initiatorName}}</p>
+    </ion-list-header>
+
+    <ion-item *ngFor="let a of answers">
+      <ion-label>{{a}}</ion-label>
+      <ion-radio value="{{answers.indexOf(a)}}"></ion-radio>
     </ion-item>
   </ion-list>
 
-  <ion-buttons end>
-    <button ion-button round (click)="vote()" [disabled]="!votedKey">Vote</button>
-    <button ion-button round (click)="closePoll()">Close</button>
-    <button ion-button round (click)="dismiss()">Cancel</button>
-  </ion-buttons>
+  <ion-grid>
+    <ion-row justify-content-around>
+      <button ion-button round outline (click)="dismiss()">Cancel</button>
+      <button ion-button round (click)="vote()" [disabled]="!votedKey">This one!</button>
+    </ion-row>
+  </ion-grid>
+
+  <button *ngIf="userIsInitiator" ion-button full color="danger" (click)="closePoll()">That's enough!</button>
+  <button *ngIf="userIsRepondent" ion-button full color="danger" (click)="withdraw()">Pull me out!</button>
+
 </ion-content>

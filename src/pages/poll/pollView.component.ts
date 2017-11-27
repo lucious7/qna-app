@@ -5,6 +5,7 @@ import { AngularFireObject } from 'angularfire2/database';
 import { Observable } from 'rxjs';
 
 import { PollService } from './poll.service';
+import { AuthService } from './../../app/auth.service';
 
 @Component({
   selector: 'app-pollview',
@@ -14,32 +15,32 @@ export class PollView {
 
   pollKey: string;
   poll: Observable<any>;
+  userIsInitiator: boolean
+  userIsRepondent: boolean;
 
-  question: Object = {
-    description: 'What is the best pizza made in somewhere?',
-    answers: {
-      A: 'Pizza A',
-      B: 'Pizza B',
-      C: 'Pizza C',
-    }
-  }
+  answers: Array<any> = [];
 
-  votedKey: Object = null;
+  votedKey: number = null;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private pollService: PollService) {
-    //this.pollKey = `-Kzts5gLOm6UZ6HyD4Vi`;
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    private pollService: PollService, private authService: AuthService) {
     this.pollKey = navParams.get('pollKey');
-    this.poll = pollService.getPoll$(this.pollKey).valueChanges();
+    this.poll = pollService.getPoll$(this.pollKey).valueChanges().map( (poll) => {
+      this.userIsInitiator = poll.initiatorId === this.authService.getUser().uid;
+      this.userIsRepondent = !!poll.respondents[this.authService.getUser().uid];
+      this.answers = poll.answers;
 
-    pollService.getPoll$(this.pollKey).valueChanges().subscribe(selectedPoll => {
-      console.info(`selectedPoll = `, selectedPoll);
-    });
+      console.info(`selectedPoll = `, poll);
+      return poll;
+    } );
   }
+
+
 
   vote(event) {
     console.log('Vote', this.votedKey);
 
-    return this.pollService.vote(this.pollKey, 0)
+    return this.pollService.vote(this.pollKey, this.votedKey)
       .then(() => {
         this.dismiss(event);
       });
@@ -51,6 +52,10 @@ export class PollView {
 
   dismiss(event) {
     this.navCtrl.pop();
+  }
+
+  withdraw(){
+    console.log('removing the user from the list of respondents');
   }
 
 }
