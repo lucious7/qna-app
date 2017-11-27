@@ -22,17 +22,17 @@ export class PollView {
 
   votedKey: number = null;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
+  constructor(public navCtrl: NavController, public navParams: NavParams,
     private pollService: PollService, private authService: AuthService) {
     this.pollKey = navParams.get('pollKey');
-    this.poll = pollService.getPoll$(this.pollKey).valueChanges().map( (poll) => {
+    this.poll = pollService.getPoll$(this.pollKey).valueChanges().map((poll: any) => {
       this.userIsInitiator = poll.initiatorId === this.authService.getUser().uid;
       this.userIsRepondent = !!poll.respondents[this.authService.getUser().uid];
       this.answers = poll.answers;
 
       console.info(`selectedPoll = `, poll);
       return poll;
-    } );
+    });
   }
 
 
@@ -54,7 +54,7 @@ export class PollView {
     this.navCtrl.pop();
   }
 
-  withdraw(){
+  withdraw() {
     console.log('removing the user from the list of respondents');
   }
 
