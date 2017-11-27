@@ -27,10 +27,12 @@ export class PollView {
     this.pollKey = navParams.get('pollKey');
     this.poll = pollService.getPoll$(this.pollKey).valueChanges().map((poll: any) => {
       this.userIsInitiator = poll.initiatorId === this.authService.getUser().uid;
-      this.userIsRepondent = !!poll.respondents[this.authService.getUser().uid];
+      this.userIsRepondent = !!poll.respondents[this.authService.getUser().uid] && !this.userIsInitiator;
       this.answers = poll.answers;
+      if(this.userIsRepondent){
+        this.votedKey = poll.respondents[this.authService.getUser().uid].vote;
+      }
 
-      console.info(`selectedPoll = `, poll);
       return poll;
     });
   }
@@ -38,7 +40,6 @@ export class PollView {
 
 
   vote(event) {
-    console.log('Vote', this.votedKey);
 
     return this.pollService.vote(this.pollKey, this.votedKey)
       .then(() => {
