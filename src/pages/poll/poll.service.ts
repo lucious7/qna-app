@@ -57,14 +57,12 @@ export class PollService {
   }
 
   closePoll(pollKey: string) {
-    const closedStatus = { status: 'closed' };
-
     let newClosePollData = {};
-    newClosePollData[`polls/${pollKey}`] = closedStatus;
+    newClosePollData[`polls/${pollKey}/status`] = 'closed';
 
     this.afDB.object('polls/' + pollKey).valueChanges().take(1).subscribe((poll: any) => {
       Object.keys(poll.respondents).forEach(respondentKey => {
-        newClosePollData[`respondents/${respondentKey}/${pollKey}`] = closedStatus;
+        newClosePollData[`respondents/${respondentKey}/${pollKey}/status`] = 'closed';
       });
 
       this.afDB.database.ref().update(newClosePollData);
