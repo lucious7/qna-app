@@ -29,6 +29,6 @@
   </ion-grid>
 
   <button *ngIf="userIsInitiator" ion-button full color="danger" (click)="closePoll()">That's enough!</button>
-  <button *ngIf="userIsRepondent" ion-button full color="danger" (click)="withdraw()">Pull me out!</button>
+  <button *ngIf="userIsRepondent" ion-button full color="danger" (click)="withdraw()" [disabled]="votedKey">Pull me out!</button>
 
 </ion-content>
