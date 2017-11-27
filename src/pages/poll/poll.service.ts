@@ -56,27 +56,19 @@ export class PollService {
     return this.afDB.database.ref().update(newVoteData);
   }
 
-  // closePoll(pollKey: string){
-  //   var closedStatus = { status: 'closed' };
+  closePoll(pollKey: string) {
+    const closedStatus = { status: 'closed' };
 
-  //   const itemRef = this.afDB.object('polls/' + pollKey);
+    let newClosePollData = {};
+    newClosePollData[`polls/${pollKey}`] = closedStatus;
 
-  //   //updates poll's status
-  //   itemRef.update(closedStatus)
-  //   .then(p => {
-  //       let respondents = this.afDB.list('polls/' + pollKey + '/respondents')
-  //       .snapshotChanges()
-  //       .map(pollActions => {
-  //         return pollActions.map(pollAction => ({ key: pollAction.key, ...pollAction.payload.val() }));
-  //       });
+    this.afDB.object('polls/' + pollKey).valueChanges().take(1).subscribe((poll: any) => {
+      Object.keys(poll.respondents).forEach(respondentKey => {
+        newClosePollData[`respondents/${respondentKey}/${pollKey}`] = closedStatus;
+      });
 
-  //       respondents.forEach(respondent => {
-  //             const respRef = this.afDB.object('respondents/' + respondent.key);
-  //             respRef.update(closedStatus)
-  //       });
-
-
-  //   })
-  // }
+      this.afDB.database.ref().update(newClosePollData);
+    });
+  }
 
 }
