@@ -64,14 +64,16 @@ export class PollService {
     //updates poll's status
     itemRef.update(closedStatus)
     .then(p => {
+        //get poll's respondents
         let respondents = this.afDB.list('polls/' + pollKey + '/respondents')
         .snapshotChanges()
         .map(pollActions => {
           return pollActions.map(pollAction => ({ key: pollAction.key, ...pollAction.payload.val() }));
         });
 
+        //updates poll for each respondents list
         respondents.forEach(respondent => {
-              const respRef = this.afDB.object('respondents/' + respondent.key);
+              const respRef = this.afDB.object('respondents/' + respondent.key + '/' + pollKey);
               respRef.update(closedStatus)
         });
 
