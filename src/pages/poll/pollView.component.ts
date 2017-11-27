@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular/navigation/nav-controller';
 import { NavParams } from 'ionic-angular/navigation/nav-params';
-import { AngularFireObject } from 'angularfire2/database';
 import { Observable } from 'rxjs';
 
 import { PollService } from './poll.service';
