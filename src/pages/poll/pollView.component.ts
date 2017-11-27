@@ -47,7 +47,8 @@ export class PollView {
   }
 
   closePoll(event) {
-    console.log('closing poll');
+    this.pollService.closePoll(this.pollKey);
+    this.dismiss({});
   }
 
   dismiss(event) {
